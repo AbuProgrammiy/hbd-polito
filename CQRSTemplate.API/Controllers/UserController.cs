@@ -22,11 +22,31 @@ namespace CQRSTemplate.API.Controllers
         {
             return await _mediator.Send(new GetAllUsersQuery());
         }
-        
+
+        [HttpGet]
+        public async Task<ResponseModel> GetTodaysBirthday()
+        {
+            return await _mediator.Send(new GetTodaysBirthdaysQuery());
+        }
+
         [HttpPost]
         public async Task<ResponseModel> Create(CreateUserCommand request)
         {
             return await _mediator.Send(request);
+        }
+
+        [HttpPatch]
+        [Route("{id}")]
+        public async Task<ResponseModel> Confirm(Guid id)
+        {
+            return await _mediator.Send(new ConfirmUserCommand { Id = id });
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<ResponseModel> Delete(Guid id)
+        {
+            return await _mediator.Send(new DeleteUserCommand { Id = id });
         }
     }
 }
